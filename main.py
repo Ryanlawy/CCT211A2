@@ -1,5 +1,6 @@
 from tkinter import *
 import login
+import menus
 """
 # header
 # scoler
@@ -15,6 +16,9 @@ def main():
 
     #starting the System
     login.Login(root)
+
+    # creating menu
+    menus.makemenu(root)
 
     root.mainloop()
 
