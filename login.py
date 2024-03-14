@@ -40,8 +40,7 @@ class Login:
         self.labelUsername = Label(self.loginFrame, text="Username", font=("Times New Roman", 16, "bold"), bg="white",
                                    fg="#25330F")
         self.labelUsername.grid(row=3, column=0, padx=10, pady=5, sticky="w")
-        self.txtUsername = Entry(self.loginFrame, textvariable=self.username, font=("Times New Roman", 15), width=30,
-                                 bd=5)
+        self.txtUsername = Entry(self.loginFrame, textvariable=self.username, font=("Times New Roman", 15), width=30,)
         self.txtUsername.grid(row=3, column=1, padx=10, pady=5, sticky="w")
 
         # Password
@@ -62,15 +61,14 @@ class Login:
                                 fg="#25330F")
         self.emptyLabel.grid(row=4, column=1, padx=10, pady=5, sticky="w")
 
-        # Right Side Frame as Welcome Message
+        # Right Side Frame
         self.rightFrame = Frame(self.root, bg="#25330F")
         self.rightFrame.pack(side=RIGHT)
 
         self.labelCompanyName = Label(self.rightFrame, text="Drama BookClub", font=("Goudy Old Style", 55),
-                                      bg="#25330F",
-                                      fg="white")
+                                      bg="#25330F", fg="white")
         self.labelCompanyName.grid(row=0, column=2, columnspan=2, padx=10)
+
         self.labelDesc = Label(self.rightFrame, text="Find Books of all things Beautiful and Lofty!", font=("Times New Roman", 25, "italic"),
-                               bg="#25330F",
-                               fg="white")
+                               bg="#25330F", fg="white")
         self.labelDesc.grid(row=1, column=2, columnspan=2, padx=10, pady=6)
