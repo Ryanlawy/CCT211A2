@@ -11,4 +11,4 @@ class MainPage:
 
         # Background Color
         self.root.config(bg="#25330F")
-        self.loginControlFrame()
+
