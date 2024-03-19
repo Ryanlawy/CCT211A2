@@ -15,7 +15,8 @@ class Login:
 
     # login method to go to the next frames
     def loginFunc(self):
-        if self.txtUsername.get() == 'lavey' and self.txtPassword.get() == '12345':
+
+        if self.txtUsername.get() == 'CCT211Awesome' and self.txtPassword.get() == '12345678':
             self.loginFrame.destroy()
             self.rightFrame.destroy()
         else:
