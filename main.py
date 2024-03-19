@@ -1,6 +1,7 @@
 from tkinter import *
 import login
 import menus
+import main_page
 """
 # header
 # scoler

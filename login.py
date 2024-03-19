@@ -15,7 +15,7 @@ class Login:
 
     # login method to go to the next frames
     def loginFunc(self):
-        if self.txtUsername.get() == 'Lavey' and self.txtPassword.get() == '12345':
+        if self.txtUsername.get() == 'lavey' and self.txtPassword.get() == '12345':
             self.loginFrame.destroy()
             self.rightFrame.destroy()
         else:
@@ -39,17 +39,17 @@ class Login:
         # Username
         self.labelUsername = Label(self.loginFrame, text="Username", font=("Times New Roman", 16, "bold"), bg="white",
                                    fg="#25330F")
-        self.labelUsername.grid(row=3, column=0, padx=10, pady=5, sticky="w")
+        self.labelUsername.grid(row=2, column=0, padx=10, pady=5, sticky="w")
         self.txtUsername = Entry(self.loginFrame, textvariable=self.username, font=("Times New Roman", 15), width=30,)
-        self.txtUsername.grid(row=3, column=1, padx=10, pady=5, sticky="w")
+        self.txtUsername.grid(row=2, column=1, padx=10, pady=5, sticky="w")
 
         # Password
         self.labelPassword = Label(self.loginFrame, text="Password", font=("Times New Roman", 16, "bold"), bg="white",
                                    fg="#25330F")
-        self.labelPassword.grid(row=2, column=0, padx=10, pady=5, sticky="w")
+        self.labelPassword.grid(row=3, column=0, padx=10, pady=5, sticky="w")
         self.txtPassword = Entry(self.loginFrame, textvariable=self.password, font=("Times New Roman", 15), width=30,
                                  bd=5, show="*")
-        self.txtPassword.grid(row=2, column=1, padx=10, pady=5, sticky="w")
+        self.txtPassword.grid(row=3, column=1, padx=10, pady=5, sticky="w")
 
         # Login Button
         self.Login_button = Button(self.loginFrame, command=self.loginFunc, text="Login",
