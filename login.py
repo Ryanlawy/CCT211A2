@@ -58,7 +58,7 @@ class Login:
 
         # Right Side Frame (Optional Decorative Frame)
         self.rightFrame = Frame(self.root, bg="#25330F")
-        self.rightFrame.pack(side=RIGHT, fill=Y)
+        self.rightFrame.pack(side=RIGHT)
 
         self.labelCompanyName = Label(self.rightFrame, text="Drama BookClub", font=("Goudy Old Style", 55), bg="#25330F", fg="white")
         self.labelCompanyName.pack(pady=20)
