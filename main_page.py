@@ -1,5 +1,8 @@
 from tkinter import *
 from tkinter import ttk
+import login
+from tkinter import messagebox
+from database import Database
 
 class MainPage:
     def __init__(self, root):
@@ -69,15 +72,7 @@ class MainPage:
         self.search_type_combobox['values'] = ('Book Name', 'Author')
         self.search_type_combobox.current(0)
         self.search_type_combobox.grid(row=1, column=3, padx=1, sticky=W)
-        # After the Search Type Combobox in the setup_ui method
 
-        # Results Frame for the Listbox
-        self.results_frame = Frame(self.root, bg="#25330F")
-        self.results_frame.pack(fill=BOTH, expand=True, pady=10)
-
-        # Custom Scrollbar
-        self.scrollbar = Scrollbar(self.results_frame, troughcolor='#25330F', activebackground='#3c4f41')
-        self.scrollbar.pack(side=RIGHT, fill=Y)
 
         # Listbox for displaying categories and books
         self.listbox = Listbox(self.results_frame, yscrollcommand=self.scrollbar.set, width=50, height=20,
@@ -106,3 +101,4 @@ class MainPage:
             for book in books:
                 self.listbox.insert(END, f"  {book}")
                 self.listbox.itemconfig(END, {'bg': '#2d4739', 'fg': 'white'})
+

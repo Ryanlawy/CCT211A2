@@ -22,7 +22,7 @@ class Login:
             else:
                 messagebox.showinfo("Success", "Login Successful!")
                 # Optionally close the login window if no further action is defined
-                # self.root.destroy()
+                #self.root.destroy()
         else:
             messagebox.showerror("Error!", "Username or password incorrect")
             self.username.set("")
