@@ -77,46 +77,13 @@ class MainPage:
         self.search_type_combobox.current(0)
         self.search_type_combobox.grid(row=1, column=3, padx=1, sticky=W)
 
-        # Results Frame for the Listbox
-        self.results_frame = Frame(self.root, bg="#25330F")
-        self.results_frame.pack(fill=BOTH, expand=True, pady=10)
-
-        # Custom Scrollbar
-        self.scrollbar = Scrollbar(self.results_frame, troughcolor='#25330F', activebackground='#3c4f41')
-        self.scrollbar.pack(side=RIGHT, fill=Y)
-
-        # Listbox for displaying categories and books
-        self.listbox = Listbox(self.results_frame, yscrollcommand=self.scrollbar.set, width=50, height=20,
-                               bg="#25330F", fg="white", highlightcolor="#25330F", highlightbackground="#25330F",
-                               selectbackground="#3c4f41", activestyle="none", bd=0, font=("Impact", 20))
-        self.listbox.pack(side=LEFT, fill=BOTH, expand=True)
-        self.scrollbar.config(command=self.listbox.yview)
-
-        self.populate_listbox()
-
-    def populate_listbox(self):
-        # Example categories and books
-        categories = {
-            "Fiction": ["Book 1", "Book 2", "Book 3","Book 3","Book 3","Book 3","Book 3","Book 3","Book 3"
-                        ,"Book 3","Book 3","Book 3","Book 3","Book 3","Book 3","Book 3"],
-            "Non-Fiction": ["Book A", "Book B", "Book C"],
-            "Science Fiction": ["Book X", "Book Y", "Book Z"]
-        }
-
-        for category, books in categories.items():
-            # Insert category name
-            self.listbox.insert(END, category.upper())  # Make category labels uppercase for emphasis
-            self.listbox.itemconfig(END, {'bg': '#25330F', 'fg': 'white'})
-
-            # Insert books under this category with indentation for visual grouping
-            for book in books:
-                self.listbox.insert(END, f"  {book}")
-                self.listbox.itemconfig(END, {'bg': '#2d4739', 'fg': 'white'})
+        # Search Instruction Label
+        self.search_instruction_label = Label(self.search_frame, text="List of Books:", font=("Impact", 20), bg="#25330F", fg="white")
+        self.search_instruction_label.grid(row=10, column=1, padx=10, sticky=W)
 
     # populate the list of books
     def set_bookframe(self):
         self.TableMargin = Frame(self.root, bg="#25330F")
-        self.TableMargin.place(x=0, y=400, width=1400, height=560)
         self.TableMargin.pack(side=BOTTOM)
         self.scrollbarx = Scrollbar(self.TableMargin, orient=HORIZONTAL)
         self.scrollbary = Scrollbar(self.TableMargin, orient=VERTICAL)
@@ -182,7 +149,7 @@ class MainPage:
         with open("data.csv", encoding='utf-8') as f:
             reader = csv.DictReader(f, delimiter=',')
             for row in reader:
-                name = row['\ufeffNames']
+                name = row['Name']
                 gender = row['Gender']
                 time = row['Count']
                 self.tree.insert("", 0, values=(name, gender, time))
