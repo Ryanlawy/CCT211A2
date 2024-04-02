@@ -16,8 +16,6 @@ class MainPage:
 
         # UI setup
         self.setup_ui()
-        # book frame set up
-        self.set_frame()
 
     def basic_info(self):
         # Your basic info implementation
@@ -76,36 +74,9 @@ class MainPage:
         self.search_type_combobox.current(0)
         self.search_type_combobox.grid(row=1, column=3, padx=1, sticky=W)
 
-
-
-
-        # Listbox for displaying categories and books
-        self.listbox = Listbox(self.results_frame, yscrollcommand=self.scrollbar.set, width=50, height=20,
-                               bg="#25330F", fg="white", highlightcolor="#25330F", highlightbackground="#25330F",
-                               selectbackground="#3c4f41", activestyle="none", bd=0, font=("Impact", 20))
-        self.listbox.pack(side=LEFT, fill=BOTH, expand=True)
-        self.scrollbar.config(command=self.listbox.yview)
-
-        self.populate_listbox()
-
-    def populate_listbox(self):
-        # Example categories and books
-        categories = {
-            "Fiction": ["Book 1", "Book 2", "Book 3","Book 3","Book 3","Book 3","Book 3","Book 3","Book 3"
-                        ,"Book 3","Book 3","Book 3","Book 3","Book 3","Book 3","Book 3"],
-            "Non-Fiction": ["Book A", "Book B", "Book C"],
-            "Science Fiction": ["Book X", "Book Y", "Book Z"]
-        }
-
-        for category, books in categories.items():
-            # Insert category name
-            self.listbox.insert(END, category.upper())  # Make category labels uppercase for emphasis
-            self.listbox.itemconfig(END, {'bg': '#25330F', 'fg': 'white'})
-
-            # Insert books under this category with indentation for visual grouping
-            for book in books:
-                self.listbox.insert(END, f"  {book}")
-                self.listbox.itemconfig(END, {'bg': '#2d4739', 'fg': 'white'})
+        # Search Instruction Label
+        self.search_instruction_label = Label(self.search_frame, text="List of Books:", font=("Impact", 20), bg="#25330F", fg="white")
+        self.search_instruction_label.grid(row=10, column=1, padx=10, sticky=W)
 
     # populate the list of books
     def set_bookframe(self):

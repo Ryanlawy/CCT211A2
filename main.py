@@ -25,7 +25,7 @@ def main():
     root.geometry("300x250")  # Size of the login window
 
     login.Login(root, on_success=None)
-    main_page.MainPage(root)
+    # main_page.MainPage(root)
 
     root.mainloop()
 
