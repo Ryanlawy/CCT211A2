@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
+import main_page
 
 class Login:
     def __init__(self, root, on_success=None):  # Accept a callback function
@@ -15,14 +16,13 @@ class Login:
 
     # Method to handle the login functionality
     def loginFunc(self):
-        if self.txtUsername.get() == 'CCT211Awesome' and self.txtPassword.get() == '12345678':
+        # CCT211Awesome
+        if self.txtUsername.get() == '12345678' and self.txtPassword.get() == '12345678':
             # If login is successful and a callback function is provided, call it
-            if self.on_success:
-                self.on_success()
-            else:
-                messagebox.showinfo("Success", "Login Successful!")
-                # Optionally close the login window if no further action is defined
-                #self.root.destroy()
+
+            messagebox.showinfo("Success", "Login Successful!")
+            # Optionally close the login window if no further action is defined
+            self.root.destroy()
         else:
             messagebox.showerror("Error!", "Username or password incorrect")
             self.username.set("")

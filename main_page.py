@@ -1,8 +1,9 @@
 from tkinter import *
 from tkinter import ttk
+import csv
 import login
 from tkinter import messagebox
-from database import Database
+import database
 
 class MainPage:
     def __init__(self, root):
@@ -15,6 +16,8 @@ class MainPage:
 
         # UI setup
         self.setup_ui()
+        # book frame set up
+        self.set_frame()
 
     def basic_info(self):
         # Your basic info implementation
@@ -74,6 +77,8 @@ class MainPage:
         self.search_type_combobox.grid(row=1, column=3, padx=1, sticky=W)
 
 
+
+
         # Listbox for displaying categories and books
         self.listbox = Listbox(self.results_frame, yscrollcommand=self.scrollbar.set, width=50, height=20,
                                bg="#25330F", fg="white", highlightcolor="#25330F", highlightbackground="#25330F",
@@ -102,3 +107,87 @@ class MainPage:
                 self.listbox.insert(END, f"  {book}")
                 self.listbox.itemconfig(END, {'bg': '#2d4739', 'fg': 'white'})
 
+    # populate the list of books
+    def set_bookframe(self):
+        self.TableMargin = Frame(self.root, bg="#25330F")
+        self.TableMargin.pack(side=BOTTOM)
+        self.scrollbarx = Scrollbar(self.TableMargin, orient=HORIZONTAL)
+        self.scrollbary = Scrollbar(self.TableMargin, orient=VERTICAL)
+        self.tree = ttk.Treeview(self.TableMargin, columns=("bookid", "title", "rating", "language_code", "num_pages", "publication_date", "publisher"), height=400, selectmode="extended", yscrollcommand=self.scrollbary.set, xscrollcommand=self.scrollbarx.set)
+        self.scrollbary.config(command=self.tree.yview)
+        self.scrollbary.pack(side=RIGHT, fill=Y)
+        self.scrollbarx.config(command=self.tree.xview)
+        self.scrollbarx.pack(side=BOTTOM, fill=X)
+        self.tree.heading('bookid', text="BookID", anchor=W)
+        self.tree.heading('title', text="Title", anchor=W)
+        self.tree.heading('rating', text="Average Rating", anchor=W)
+        self.tree.heading('language_code', text="Language", anchor=W)
+        self.tree.heading('num_pages', text="Pages", anchor=W)
+        self.tree.heading('publication_date', text="Publication Date", anchor=W)
+        self.tree.heading('publisher', text="Publisher", anchor=W)
+
+        self.tree.column('#0', stretch=NO, minwidth=0, width=0)
+        self.tree.column('#1', stretch=NO, minwidth=0, width=200)
+        self.tree.column('#2', stretch=NO, minwidth=0, width=200)
+        self.tree.pack()
+
+        # populate the treeview from a csv
+        with open("books.csv", encoding='utf-8') as f:
+            reader = csv.DictReader(f, delimiter=',')
+            for row in reader:
+                bookid = row['bookID']
+                title = row['title']
+                rating = row['average_rating']
+                isbn = row['isbn']
+                language = row['language_code']
+                page = row['  num_pages']
+                date = row['publication_date']
+                publisher = row['publisher']
+                self.tree.insert("", 0, values=(bookid, title, rating, isbn, language, page, date, publisher))
+        self.tree.pack(fill=X)
+
+    # populate the list of users
+    def set_userframe(self):
+        self.TableMargin = Frame(self.root, bg="#25330F")
+        self.TableMargin.pack(side=BOTTOM)
+        self.scrollbarx = Scrollbar(self.TableMargin, orient=HORIZONTAL)
+        self.scrollbary = Scrollbar(self.TableMargin, orient=VERTICAL)
+        self.tree = ttk.Treeview(self.TableMargin, columns=("userid", "name", "gender", "time", "quote", "author", "tags", "likes"), height=400, selectmode="extended", yscrollcommand=self.scrollbary.set, xscrollcommand=self.scrollbarx.set)
+        self.scrollbary.config(command=self.tree.yview)
+        self.scrollbary.pack(side=RIGHT, fill=Y)
+        self.scrollbarx.config(command=self.tree.xview)
+        self.scrollbarx.pack(side=BOTTOM, fill=X)
+        self.tree.heading('userid', text="UserID", anchor=W)
+        self.tree.heading('name', text="Name", anchor=W)
+        self.tree.heading('gender', text="Gender", anchor=W)
+        self.tree.heading('time', text="Reading Time ", anchor=W)
+        self.tree.heading('quote', text="Favorite Quote", anchor=W)
+        self.tree.heading('author', text="Favorite Author", anchor=W)
+        self.tree.heading('tags', text="Tags", anchor=W)
+        self.tree.heading('likes', text="Likes", anchor=W)
+
+        self.tree.column('#0', stretch=NO, minwidth=0, width=0)
+        self.tree.column('#1', stretch=NO, minwidth=0, width=200)
+        self.tree.column('#2', stretch=NO, minwidth=0, width=200)
+        self.tree.pack()
+
+        # populate the treeview from a csv
+        with open("data.csv", encoding='utf-8') as f:
+            reader = csv.DictReader(f, delimiter=',')
+            for row in reader:
+                name = row['Name']
+                gender = row['Gender']
+                time = row['Count']
+                self.tree.insert("", 0, values=(name, gender, time))
+
+        with open("quotes.csv", encoding='utf-8') as f:
+            reader = csv.DictReader(f, delimiter=',')
+            for row in reader:
+                userid = row['index']
+                quote = row['quote']
+                author = row['author']
+                tags = row['tags']
+                likes = row['likes']
+                self.tree.insert("", 0, values=(userid, quote, author, tags, likes))
+
+        self.tree.pack(fill=X)

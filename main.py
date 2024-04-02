@@ -12,7 +12,7 @@ def open_main_application():
     new_root.resizable(False, True)
 
     # Initialize the main application interface
-    app = main_page.MainPage(new_root)
+    main_page.MainPage(new_root)
 
     # Initialize menus for the main application, if needed
     menus.makemenu(new_root)
@@ -24,7 +24,8 @@ def main():
     root.title("Drama BookClub")
     root.geometry("300x250")  # Size of the login window
 
-    login_app = login.Login(root, on_success=open_main_application)
+    login.Login(root, on_success=None)
+    main_page.MainPage(root)
 
     root.mainloop()
 
