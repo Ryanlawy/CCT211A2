@@ -77,6 +77,9 @@ class MainPage:
         # Search Instruction Label
         self.search_instruction_label = Label(self.search_frame, text="List of Books:", font=("Impact", 20), bg="#25330F", fg="white")
         self.search_instruction_label.grid(row=10, column=1, padx=10, sticky=W)
+        self.search_instruction_label.grid(row=10, column=1, padx=10, sticky=W)
+        # Display the book list automatically
+        self.set_bookframe()
 
     # populate the list of books
     def set_bookframe(self):
