@@ -152,7 +152,7 @@ class MainPage:
         with open("data.csv", encoding='utf-8') as f:
             reader = csv.DictReader(f, delimiter=',')
             for row in reader:
-                name = row['Name']
+                name = row['\ufeffNames']
                 gender = row['Gender']
                 time = row['Count']
                 self.tree.insert("", 0, values=(name, gender, time))

@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
-import main_page
+
 
 class Login:
     def __init__(self, root, on_success=None):  # Accept a callback function
