@@ -20,7 +20,7 @@ class Login:
         if self.txtUsername.get() == '12345678' and self.txtPassword.get() == '12345678':
             # If login is successful and a callback function is provided, call it
 
-            messagebox.showinfo("Success", "Login Successful!")
+            # messagebox.showinfo("Success", "Login Successful!")
             # Optionally close the login window if no further action is defined
             self.root.destroy()
         else:
