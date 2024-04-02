@@ -17,7 +17,8 @@ class MainPage:
         # UI setup
         self.setup_ui()
         # book frame set up
-        self.set_frame()
+        self.set_bookframe()
+        self.set_userframe()
 
     def basic_info(self):
         # Your basic info implementation
@@ -76,8 +77,13 @@ class MainPage:
         self.search_type_combobox.current(0)
         self.search_type_combobox.grid(row=1, column=3, padx=1, sticky=W)
 
+        # Results Frame for the Listbox
+        self.results_frame = Frame(self.root, bg="#25330F")
+        self.results_frame.pack(fill=BOTH, expand=True, pady=10)
 
-
+        # Custom Scrollbar
+        self.scrollbar = Scrollbar(self.results_frame, troughcolor='#25330F', activebackground='#3c4f41')
+        self.scrollbar.pack(side=RIGHT, fill=Y)
 
         # Listbox for displaying categories and books
         self.listbox = Listbox(self.results_frame, yscrollcommand=self.scrollbar.set, width=50, height=20,
@@ -110,6 +116,7 @@ class MainPage:
     # populate the list of books
     def set_bookframe(self):
         self.TableMargin = Frame(self.root, bg="#25330F")
+        self.TableMargin.place(x=0, y=400, width=1400, height=560)
         self.TableMargin.pack(side=BOTTOM)
         self.scrollbarx = Scrollbar(self.TableMargin, orient=HORIZONTAL)
         self.scrollbary = Scrollbar(self.TableMargin, orient=VERTICAL)
@@ -175,7 +182,7 @@ class MainPage:
         with open("data.csv", encoding='utf-8') as f:
             reader = csv.DictReader(f, delimiter=',')
             for row in reader:
-                name = row['Name']
+                name = row['\ufeffNames']
                 gender = row['Gender']
                 time = row['Count']
                 self.tree.insert("", 0, values=(name, gender, time))
