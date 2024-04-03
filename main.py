@@ -4,18 +4,23 @@ import menus
 import main_page
 import database
 
+
 def main():
     root = Tk()
+    width = root.winfo_screenwidth()
+    height = root.winfo_screenheight()
     root.title("Drama BookClub")
-    root.geometry("300x250")  # Size of the login window
+    root.geometry("%dx%d" % (width, height))  # Size of the login window
 
-    login.Login(root, on_success=None)
+
+
+    login.Login(root)
     root.mainloop()
 
     # bring out the main page
     main_root = Tk()
     main_root.title("Main Application")
-    main_root.geometry("1400x930+100+50")
+    main_root.geometry("%dx%d" % (width, height))
     main_root.resizable(False, True)
 
     # Initialize the main application interface

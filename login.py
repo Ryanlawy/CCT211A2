@@ -3,9 +3,8 @@ from tkinter import messagebox
 
 
 class Login:
-    def __init__(self, root, on_success=None):  # Accept a callback function
+    def __init__(self, root):  # Accept a callback function
         self.root = root
-        self.on_success = on_success  # Store the callback
 
         self.username = StringVar()
         self.password = StringVar()
