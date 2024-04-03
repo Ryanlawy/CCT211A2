@@ -9,6 +9,12 @@ from tkinter import messagebox
 This part is used to create the meeting sign-up 
 following the structure of demo from class we add a similar feature to our 
 application 
+
+In addition to that we add a range of different improvement to the code such as:
+jumping back to the main page after submit or update, adding warning messages for
+checking if a meeting is selected when editing and deleting, 
+pushing warning messages if there are no meeting in the data when deleting and editing
+ 
 """
 
 class FloatScreen(tk.Tk):
@@ -108,13 +114,17 @@ class MainFrame(tk.Frame):
         new_button.grid(column=0)
 
     def edit_meeting(self):
+        # if there is no meeting to edit
         try:
-            print(self.selected)
             idx = self.selected[0]
             record_id = self.tree.item(idx)['values'][0]
             self.controller.show_frame("ReadFrame", record_id)
-        except:
+        except IndexError:
+            # if there is no selected meeting
             messagebox.showinfo("Oh No ~", "Please Select a Meeting you want to Edit!")
+
+        except:
+            messagebox.showinfo("oh No ~", "There's no Meeting to be Edit, try Calling for one first!")
 
     def select(self, event):
         """highlight the selection"""
@@ -123,12 +133,18 @@ class MainFrame(tk.Frame):
     def delete_meeting(self):
         """deleting selected meeting"""
         # delect all selection from the list selected
-        for idx in self.selected:
-            record_id = self.tree.item(idx)['values'][0]
-            # remove from file
-            self.persist.delete_record(record_id)
-            # remove from treeview
-            self.tree.delete(idx)
+        if len(self.selected) == 0:
+            messagebox.showinfo("Oh No ~", "No Meeting have been selected for delete")
+        try:
+            error_test = self.selected[0]
+            for idx in self.selected:
+                record_id = self.tree.item(idx)['values'][0]
+                # remove from file
+                self.persist.delete_record(record_id)
+                # remove from treeview
+                self.tree.delete(idx)
+        except:
+            messagebox.showinfo("oh No ~", "Can't see any Meeting to be delete, try Calling for one first!")
 
     def update(self):
         """refresh the treeview"""
@@ -159,7 +175,7 @@ class ReadFrame(tk.Frame):
         self.persist = persist
         # this empty dict will hold each of the data entry fields
         self.data = {}
-        """ Use EntryField classes to set up the form, along with a submit button """
+        """set up the form, and a submit button """
         # username
         self.data['UserName'] = EntryField(self, label='UserName')
         self.data['UserName'].grid(row=1, column=0, pady=2)
@@ -182,13 +198,13 @@ class ReadFrame(tk.Frame):
         self.data['Email'] = EntryField(self, label='Email')
         self.data['Email'].grid(row=7, column=0, pady=2)
 
-        self.Button1 = tk.Button(self, text='Update', activebackground="green",
+        self.Button1 = tk.Button(self, text='Update',
                                  activeforeground="blue", command=self.submit)
-        self.Button1.grid(row=3, column=0, pady=10)
+        self.Button1.grid(row=8, column=0, pady=10)
 
-        button = tk.Button(self, text="Return to the browse page",
-                           command=lambda: controller.show_frame("BrowsePage"))
-        button.grid(row=4, column=0)
+        button = tk.Button(self, text="Return to Meetings",
+                           command=lambda: controller.show_frame("MainFrame"))
+        button.grid(row=9, column=0)
 
     def update(self, rid):
         record = self.controller.data.get_record(rid)
@@ -202,38 +218,39 @@ class ReadFrame(tk.Frame):
         self.data['Book Selection'].dataentry.set(record.book_selection)
         self.data['Email'].dataentry.set(record.email)
 
-        self.contact = self.persist.get_record(rid)
+        self.meeting = self.persist.get_record(rid)
+        self.controller.show_frame("MainFrame")
 
     def submit(self):
         ''' grab the text placed in the entry widgets accessed through the dict
         '''
 
-        self.contact.name = self.data['UserName'].get()
-        self.contact.email = self.data['DATE'].get()
-        self.contact.name = self.data['Time'].get()
-        self.contact.email = self.data['Meeting Place'].get()
-        self.contact.email = self.data['Theme'].get()
-        self.contact.name = self.data['Book Selection'].get()
-        self.contact.email = self.data['Email'].get()
+        self.meeting.name = self.data['UserName'].get()
+        self.meeting.email = self.data['DATE'].get()
+        self.meeting.name = self.data['Time'].get()
+        self.meeting.email = self.data['Meeting Place'].get()
+        self.meeting.email = self.data['Theme'].get()
+        self.meeting.name = self.data['Book Selection'].get()
+        self.meeting.email = self.data['Email'].get()
 
-        self.persist.save(self.contact)
-
+        self.persist.save(self.meeting)
+        self.controller.show_frame("MainFrame")
 
 class AddFrame(tk.Frame):
-    ''' provides a form for creating a new Contact
+    ''' provides a form for creating a new meeting
     '''
 
     def __init__(self, parent, controller, persist=None):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-        label = tk.Label(self, text="Create New Entry",
+        label = tk.Label(self, text="Create New Meeting",
                          font=controller.title_font)
         label.grid(row=0, column=0)
         # this object is the data persistence model
         self.persist = persist
         # this empty dict will hold each of the data entry fields
         self.data = {}
-        """ Use EntryField classes to set up the form, along with a submit button """
+
         self.data['UserName'] = EntryField(self, label='UserName')
         self.data['UserName'].grid(row=1, column=0, pady=2)
 
@@ -257,15 +274,14 @@ class AddFrame(tk.Frame):
 
         self.Button1 = tk.Button(self, text='Submit', activebackground="green",
                                  activeforeground="blue", command=self.submit)
-        self.Button1.grid(row=3, column=0, pady=10)
+        self.Button1.grid(row=8, column=0, pady=10)
 
         button = tk.Button(self, text="Return to the browse page",
                            command=lambda: controller.show_frame("MainFrame"))
-        button.grid(row=4, column=0)
+        button.grid(row=9, column=0)
 
     def reset(self):
-        ''' on every new entry, blank out the fields
-        '''
+        """reset the frame"""
         for key in self.data:
             self.data[key].reset()
 
@@ -285,18 +301,18 @@ class AddFrame(tk.Frame):
 
         self.persist.save(c)
         self.update()
+        self.controller.show_frame("MainFrame")
 
 
 class EntryField(tk.Frame):
     def __init__(self, parent, label='', passwordField=False, *args, **kwargs):
-        # keep in mind EntryField is a Frame widget so any args and kwargs apply only to it, not its children - the label and title
         super().__init__(parent, *args, **kwargs)
         self.dataentry = tk.StringVar()
         self.label = label
 
         self.title = tk.Label(self, text=label, width=10)
         self.title.grid(row=0, column=0, padx=10, sticky=(tk.W + tk.E))
-        # args and kwargs are only sent in the super and this doesn't apply to the super construct but one of the children
+
         if passwordField:
             self.field = tk.Entry(
                 self, width=30, textvariable=self.dataentry, show="*")
