@@ -18,7 +18,7 @@ class MainPage:
         self.setup_ui()
         # book frame set up
         self.set_bookframe()
-        self.set_userframe()
+        #self.set_userframe()
 
     def basic_info(self):
         # Your basic info implementation
@@ -71,18 +71,28 @@ class MainPage:
         self.search_button = Button(self.search_frame, text="Search", fg="black", bg="#25330F", width=10, font=("Impact", 15))
         self.search_button.grid(row=1, column=2, padx=10, sticky=W)
 
-        # Search Type Combobox
+        #  Button
         self.search_type_combobox = ttk.Combobox(self.search_frame, textvariable=self.search_type_var, state="readonly", width=15, style='Custom.TCombobox')
-        self.search_type_combobox['values'] = ('Book Name', 'Author')
+        self.search_type_combobox['values'] = ('Book', 'User')
         self.search_type_combobox.current(0)
         self.search_type_combobox.grid(row=1, column=3, padx=1, sticky=W)
+        self.search_type_combobox.bind("<<ComboboxSelected>>", self.selection_changed(self.search_type_combobox))
+
 
         # Search Instruction Label
         self.search_instruction_label = Label(self.search_frame, text="List of Books:", font=("Impact", 20), bg="#25330F", fg="white")
         self.search_instruction_label.grid(row=10, column=1, padx=10, sticky=W)
         self.search_instruction_label.grid(row=10, column=1, padx=10, sticky=W)
         # Display the book list automatically
-        self.set_bookframe()
+        #self.set_userframe()
+        #self.set_bookframe()
+
+    def selection_changed(self, box):
+        if box.get() == "Book":
+            self.set_userframe()
+        else:
+            self.set_bookframe()
+
 
     # populate the list of books
     def set_bookframe(self):
@@ -122,6 +132,7 @@ class MainPage:
                 publisher = row['publisher']
                 self.tree.insert("", 0, values=(bookid, title, rating, isbn, language, page, date, publisher))
         self.tree.pack(fill=X)
+
 
     # populate the list of users
     def set_userframe(self):
@@ -169,5 +180,5 @@ class MainPage:
 
         self.tree.pack(fill=X)
 
-    def set_book_listdb():
+#    def set_book_listdb():
 
