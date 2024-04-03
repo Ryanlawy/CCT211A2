@@ -168,3 +168,6 @@ class MainPage:
                 self.tree.insert("", 0, values=(userid, quote, author, tags, likes))
 
         self.tree.pack(fill=X)
+
+    def set_book_listdb():
+
