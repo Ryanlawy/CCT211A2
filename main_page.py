@@ -85,38 +85,31 @@ class MainPage:
 
         #call for meeting
         self.meeting_button = Button(text="Meeting", command=meeting.FloatScreen, fg="black", bg="#25330F", width=10, font=("Impact", 15))
-        self.search_button.grid(row=2, column=2, padx=5, sticky=W)
-        #self.meeting_button.pack(side="top", padx=10, pady=10)
+        #self.meeting_button.grid(row=2, column=2, padx=5, sticky=W)
+        self.meeting_button.pack(side="top", padx=10, pady=10)
 
         #my list
         self.list_button = Button(text="My Lists", command=meeting.FloatScreen, fg="black", bg="#25330F", width=10, font=("Impact", 15))
-        self.search_button.grid(row=2, column=4, padx=5, sticky=W)
-        #self.list_button.pack(side="top", padx=20, pady=10)
+        #self.list_button.grid(row=2, column=4, padx=5, sticky=W)
+        self.list_button.pack(side="top", padx=20, pady=10)
 
 
         # # Display the book list automatically
         self.set_bookframe()
 
-    # def on_combobox_select(self, event=None):
-    #     selection = self.search_type_var.get()
-    #     for item in self.tree.get_children():
-    #         self.tree.delete(item)
-    #     if selection == 'Books':
-    #         print("book")
-    #         self.set_bookframe()
-    #     elif selection == 'User':
-    #         print("user")
-    #         self.set_userframe()
 
-    # populate the list of books
-
+    # helper
     def set_book_complex(self):
         try:
             self.TableMargin.destroy()
+            self.search_results_frame.destroy()
             self.set_bookframe()
         except:
             self.set_bookframe()
 
+
+
+    # populate the list of
     def set_bookframe(self):
         self.TableMargin = Frame(self.root, bg="#25330F")
         self.TableMargin.pack(side=BOTTOM)
@@ -207,21 +200,22 @@ class MainPage:
 
         # Initialize an empty list for search results
         search_results = []
-
         # Open and read the CSV file
         with open("books.csv", encoding='utf-8') as f:
             reader = csv.DictReader(f)
             for row in reader:
                 # Add conditions for searching by different attributes
-                if search_type == 'Books' and query in row['title'].lower():
+                if query in row['title'].lower():
                     search_results.append(row)
                 # Add more conditions as needed
 
         # Update the TreeView with the search results
         self.update_booklist(search_results)
 
+
     def update_booklist(self, search_results):
         # First, clear any existing search results frame if it exists
+        self.TableMargin.destroy()
         if hasattr(self, 'search_results_frame'):
             self.search_results_frame.destroy()
 

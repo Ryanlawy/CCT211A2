@@ -17,6 +17,7 @@ pushing warning messages if there are no meeting in the data when deleting and e
  
 """
 
+
 class FloatScreen(tk.Tk):
 
     def __init__(self, *args, **kwargs):
@@ -48,6 +49,9 @@ class FloatScreen(tk.Tk):
         else:
             frame.update()
         frame.tkraise()
+
+    def get_page(self):
+        return self.frames["MainFrame"]
 
 
 class MainFrame(tk.Frame):

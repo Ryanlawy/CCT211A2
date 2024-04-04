@@ -10,7 +10,7 @@ def connect_database():
 
 
 def create_database():
-    cur.execute('''DROP TABLE IF EXISTS call_meeting;''')
+    cur.execute('''DROP TABLE IF EXISTS "call_meeting";''')
     cur.execute('''CREATE TABLE IF NOT EXISTS "call_meeting" (
             "meeting_id"	INTEGER PRIMARY KEY,
             "username"	TEXT NOT NULL,
@@ -22,6 +22,18 @@ def create_database():
             "email"	TEXT NOT NULL
             );''')
 
+def create_book_database():
+    cur.execute('''DROP TABLE IF EXISTS "call_meeting";''')
+    cur.execute('''CREATE TABLE IF NOT EXISTS "call_meeting" (
+            "meeting_id"	INTEGER PRIMARY KEY,
+            "username"	TEXT NOT NULL,
+            "date"	TEXT NOT NULL,
+            "time"	TEXT NOT NULL,
+            "place"	TEXT NOT NULL,
+            "theme"	TEXT NOT NULL,
+            "book_selection" TEXT NOT NULL,
+            "email"	TEXT NOT NULL
+            );''')
 
 def close_database():
     conn.commit()
