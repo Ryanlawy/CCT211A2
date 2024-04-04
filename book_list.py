@@ -6,15 +6,7 @@ from tkinter import messagebox
 import main_page
 
 """
-This part is used to create the meeting sign-up 
-following the structure of demo from class we add a similar feature to our 
-application 
-
-In addition to that we add a range of different improvement to the code such as:
-jumping back to the main page after submit or update, adding warning messages for
-checking if a meeting is selected when editing and deleting, 
-pushing warning messages if there are no meeting in the data when deleting and editing
- 
+the similar modual to create a window to adding deleting book object for request
 """
 
 class ListScreen(tk.Tk):
@@ -32,7 +24,7 @@ class ListScreen(tk.Tk):
         stack.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F in (MainFrame, ReadFrame):
+        for F in (MainFrame, ReadFrame, AddBook):
             data_name = F.__name__
             frame = F(parent=stack, controller=self, persist=self.data)
             self.frames[data_name] = frame
@@ -60,7 +52,7 @@ class MainFrame(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
 
-        label = tk.Label(self, text="Book list",
+        label = tk.Label(self, text="Request Book List",
                          font=controller.title_font)
         label.grid(column=0, pady=10)
 
@@ -112,9 +104,9 @@ class MainFrame(tk.Frame):
                                   command=self.delete_meeting)
         delete_button.grid(column=0)
 
-        # new_button = tk.Button(self, text="Call For New Meeting",
-        #                        command=lambda: controller.show_frame("AddFrame"))
-        # new_button.grid(column=0)
+        new_button = tk.Button(self, text="Request New Book",
+                               command=lambda: controller.show_frame("AddBook"))
+        new_button.grid(column=0)
 
     def edit_meeting(self):
         # if there is no meeting to edit
@@ -137,7 +129,7 @@ class MainFrame(tk.Frame):
         """deleting selected meeting"""
         # delect all selection from the list selected
         if len(self.selected) == 0:
-            messagebox.showinfo("Oh No ~", "No Meeting have been selected for delete")
+            messagebox.showinfo("Oh No ~", "No Book have been selected for delete")
         try:
             # a random error check the try statement
             error_test = self.selected[0]
@@ -148,7 +140,7 @@ class MainFrame(tk.Frame):
                 # remove from treeview
                 self.tree.delete(idx)
         except:
-            messagebox.showinfo("oh No ~", "Can't see any Meeting to be delete, try Calling for one first!")
+            messagebox.showinfo("oh No ~", "Can't see any Book to be delete, try Calling for one first!")
 
     def update(self):
         """refresh the treeview"""
@@ -206,7 +198,7 @@ class ReadFrame(tk.Frame):
                                  activeforeground="blue", command=self.submit)
         self.Button1.grid(row=8, column=0, pady=10)
 
-        button = tk.Button(self, text="Return to Meetings",
+        button = tk.Button(self, text="Return to My BookList",
                            command=lambda: controller.show_frame("MainFrame"))
         button.grid(row=9, column=0)
 
@@ -248,7 +240,7 @@ class AddBook(tk.Frame):
     def __init__(self, parent, controller, persist=None):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-        label = tk.Label(self, text="Create New Meeting",
+        label = tk.Label(self, text="Create New BOOK",
                          font=controller.title_font)
         label.grid(row=0, column=0)
         # this object is the data persistence model
@@ -295,13 +287,13 @@ class AddBook(tk.Frame):
 
     def submit(self):
         """create a new meeting base on the form"""
-        c = storage.MyList(bookid=main_page.MainPage.bo,
-                               title=self.data['bookid'].get(),
-                      rating=self.data['bookid'].get(),
-                      language_code=self.data['bookid'].get(),
-                      num_pages=self.data['bookid'].get(),
-                      publication_date=self.data['bookid'].get(),
-                      publisher=self.data['bookid'].get()
+        c = storage.MyList(bookid=self.data['bookid'].get(),
+                               title=self.data['title'].get(),
+                      rating=self.data['rating'].get(),
+                      language_code=self.data['language_code'].get(),
+                      num_pages=self.data['num_pages'].get(),
+                      publication_date=self.data['publication_date'].get(),
+                      publisher=self.data['publisher'].get()
                        )
 
         self.persist.save(c)

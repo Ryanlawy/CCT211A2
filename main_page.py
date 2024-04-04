@@ -100,8 +100,8 @@ class MainPage:
         #self.add_list.grid(row=2, column=4, padx=5, sticky=W)
         self.add_list.pack()
 
-        self.create_new_book = Button(self.search_frame, text="create new book",
-                                      fg="black", bg="#25330F", width=10,
+        self.create_new_book = Button(self.search_frame, text="Request new book",
+                                      fg="black", bg="#25330F", width=15,
                                       font=("Impact", 15), command=book_list.ListScreen)
         self.create_new_book.grid(row=1, column=5, padx=10)
 
