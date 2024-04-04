@@ -1,6 +1,11 @@
 import tkinter as tk
 from tkinter import *
 import tkinter.messagebox as mb
+from login import Login
+import main_page
+from credit import Credit
+import main
+
 
 
 def makemenu(win):
@@ -13,9 +18,8 @@ def makemenu(win):
 
     # create a pulldown menu, and add it to the menu bar
     filemenu = Menu(top_menu, tearoff=0)
-    filemenu.add_command(label="Logout", command=to_login)
-    filemenu.add_command(label="User", command=to_user)
-    filemenu.add_separator()
+    filemenu.add_command(label="Logout", command=lambda: to_login(win))
+    filemenu.add_command(label="User", command=lambda: to_user(win))
     filemenu.add_command(label="Exit", command=win.quit)
 
     top_menu.add_cascade(label="View", menu=filemenu)
@@ -35,17 +39,30 @@ def makemenu(win):
     win.config(menu=top_menu)
 
 
-def to_login():
-    # take to login
-    print("yeah")
+
+def to_login(win):
+    win.destroy()  # This destroys the current window
+    # login_win = tk.Tk()  # Use Tk() for the main window of the application, Toplevel() for subsidiary windows
+    # login_win.title("Login")
+    # login_win.geometry("400x300")
+    main.main()
+    # Login(login_win)
+    # login_win.  # Start the application
 
 def to_user():
-    # take to user page
-    print("Oh Yeah")
+    login_win = tk.Toplevel()
+    login_win.title("login")
+    login_win.geometry("400x300")
+    Login(login_win)
 
-def show_text():
-    # show a page of info
-    print("")
+def show_text(win):
+    win.destroy()
+    credit_win = tk.Tk()
+    credit_win.title("Credits")
+    credit_win.geometry("400x300")
+    Credit(credit_win)
+    
+    
 
 def Back():
     # take to main page and login

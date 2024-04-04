@@ -162,6 +162,7 @@ class MainPage:
     def set_userframe(self):
 
         self.TableMargin.destroy()
+        self.search_results_frame.destroy()
         self.TableMargin = Frame(self.root, bg="#25330F")
         self.TableMargin.pack(side=BOTTOM)
         self.scrollbarx = Scrollbar(self.TableMargin, orient=HORIZONTAL)
@@ -288,6 +289,7 @@ class MainPage:
     def set_my_list(self):
         """set the frame for the personal book list"""
         self.TableMargin.destroy()
+        self.search_results_frame.destroy()
         self.search_results_frame = Frame(self.root, bg="#25330F")
         self.search_results_frame.pack(fill=BOTH, expand=True)
 
