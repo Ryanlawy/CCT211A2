@@ -4,7 +4,7 @@ Username : CCT211Awesome
 Password: 12345678
 
 Please Run the database.py before the main.py
-
+GitHub Link: https://github.com/Ryanlawy/CCT211A2/blob/main/main_page.py
 
 App Guide:
     After log into the app there are 7 buttons: search, All Books, All Users, 
