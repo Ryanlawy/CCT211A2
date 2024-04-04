@@ -182,24 +182,19 @@ class MainPage:
         self.tree.column('#2', stretch=NO, minwidth=0, width=200)
         self.tree.pack()
 
-        # populate the treeview from a csv
-        with open("data.csv", encoding='utf-8') as f:
-            reader = csv.DictReader(f, delimiter=',')
-            for row in reader:
-                name = row['\ufeffNames']
-                gender = row['Gender']
-                time = row['Count']
-                self.tree.insert("", 0, values=(name, gender, time))
-
         with open("quotes.csv", encoding='utf-8') as t:
             reader = csv.DictReader(t, delimiter=',')
             for row in reader:
-                userid = row['index']
+                print(row)
+                name = row['Names']
+                gender = row['Gender']
+                time = row['Count']
+                userid = row['\ufeffindex']
                 quote = row['quote']
                 author = row['author']
                 tags = row['tags']
                 likes = row['likes']
-                self.tree.insert("", 0, values=(userid, quote, author, tags, likes))
+                self.tree.insert("", 0, values=(userid, name, gender, time, quote, author, tags, likes))
 
     def perform_search(self):
         query = self.search_var.get().lower()  # Convert query to lowercase for case-insensitive search

@@ -3,10 +3,7 @@ from tkinter import *
 import tkinter.messagebox as mb
 from login import Login
 import main_page
-from credit import Credit
 import main
-import credit
-
 
 
 def makemenu(win):
