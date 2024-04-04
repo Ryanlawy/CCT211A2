@@ -185,7 +185,6 @@ class MainPage:
         with open("quotes.csv", encoding='utf-8') as t:
             reader = csv.DictReader(t, delimiter=',')
             for row in reader:
-                print(row)
                 name = row['Names']
                 gender = row['Gender']
                 time = row['Count']
@@ -280,7 +279,6 @@ class MainPage:
     def set_my_list(self):
         """set the frame for the personal book list"""
         self.TableMargin.destroy()
-        self.search_results_frame.destroy()
         self.search_results_frame = Frame(self.root, bg="#25330F")
         self.search_results_frame.pack(fill=BOTH, expand=True)
 
