@@ -4,6 +4,7 @@ import csv
 import login
 from tkinter import messagebox
 import database
+import meeting
 
 class MainPage:
     def __init__(self, root):
@@ -58,23 +59,23 @@ class MainPage:
 
         # Search Entry
         self.search_entry = Entry(self.search_frame, textvariable=self.search_var, font=("Times New Roman", 15), width=50)
-        self.search_entry.grid(row=1, column=1, padx=15, sticky=W)
+        self.search_entry.grid(row=1, column=1, padx=5, sticky=W)
 
         # Search Button
         self.search_button = Button(self.search_frame, text="Search", command=self.perform_search, fg="black", bg="#25330F", width=10, font=("Impact", 15))
-        self.search_button.grid(row=1, column=2, padx=10, sticky=W)
+        self.search_button.grid(row=1, column=2, padx=5, sticky=W)
 
         #  show book Button
         self.showbook_button = Button(self.search_frame, text="All Books",
                                       fg="black", bg="#25330F", width=10,
-                                      font=("Impact", 15), command=self.set_bookframe)
-        self.showbook_button.grid(row=1, column=3, padx=10, sticky=W)
+                                      font=("Impact", 15), command=self.set_book_complex)
+        self.showbook_button.grid(row=1, column=3, padx=5, sticky=W)
         # show user button
 
         self.showuser_button = Button(self.search_frame, text="All Users",
                                       fg="black", bg="#25330F", width=10,
                                       font=("Impact", 15), command=self.set_userframe)
-        self.showuser_button.grid(row=1, column=4, padx=10, sticky=W)
+        self.showuser_button.grid(row=1, column=4, padx=5, sticky=W)
         # self.search_type_combobox = ttk.Combobox(self.search_frame, textvariable=self.search_type_var, state="readonly", width=15, style='Custom.TCombobox')
         # self.search_type_combobox['values'] = ('Book', 'User')
         # self.search_type_combobox.current(0)
@@ -84,15 +85,17 @@ class MainPage:
 
         #call for meeting
         self.meeting_button = Button(text="Meeting", command=meeting.FloatScreen, fg="black", bg="#25330F", width=10, font=("Impact", 15))
-        self.meeting_button.pack(side="top", padx=10)
+        self.search_button.grid(row=2, column=2, padx=5, sticky=W)
+        #self.meeting_button.pack(side="top", padx=10, pady=10)
 
         #my list
         self.list_button = Button(text="My Lists", command=meeting.FloatScreen, fg="black", bg="#25330F", width=10, font=("Impact", 15))
-        self.list_button.pack(side="top", padx=20, pady=10)
+        self.search_button.grid(row=2, column=4, padx=5, sticky=W)
+        #self.list_button.pack(side="top", padx=20, pady=10)
 
 
         # # Display the book list automatically
-        # self.set_bookframe()
+        self.set_bookframe()
 
     # def on_combobox_select(self, event=None):
     #     selection = self.search_type_var.get()
@@ -106,6 +109,14 @@ class MainPage:
     #         self.set_userframe()
 
     # populate the list of books
+
+    def set_book_complex(self):
+        try:
+            self.TableMargin.destroy()
+            self.set_bookframe()
+        except:
+            self.set_bookframe()
+
     def set_bookframe(self):
         self.TableMargin = Frame(self.root, bg="#25330F")
         self.TableMargin.pack(side=BOTTOM)
@@ -146,6 +157,8 @@ class MainPage:
 
     # populate the list of users
     def set_userframe(self):
+
+        self.TableMargin.destroy()
         self.TableMargin = Frame(self.root, bg="#25330F")
         self.TableMargin.pack(side=BOTTOM)
         self.scrollbarx = Scrollbar(self.TableMargin, orient=HORIZONTAL)
@@ -249,7 +262,7 @@ class MainPage:
         # Update the search result label
         self.search_result_label.config(text=f"Number of search results: {len(search_results)}")
 
-        # Optionally, handle the case where no results are found
+        # handle the case where no results are found
         if not search_results:
             self.search_result_label.config(text="No results found.")
 
