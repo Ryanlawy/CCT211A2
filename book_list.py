@@ -97,39 +97,44 @@ class MainFrame(tk.Frame):
                 record.publisher))
 
         edit_button = tk.Button(self, text="Edit Book",
-                                command=self.edit_meeting)
+                                command=self.edit_book)
         edit_button.grid(column=0)
 
         delete_button = tk.Button(self, text="Delete book",
-                                  command=self.delete_meeting)
+                                  command=self.delete_book)
         delete_button.grid(column=0)
 
         new_button = tk.Button(self, text="Request New Book",
                                command=lambda: controller.show_frame("AddBook"))
         new_button.grid(column=0)
 
-    def edit_meeting(self):
-        # if there is no meeting to edit
+    def edit_book(self):
+        # if there is no book to edit
         try:
             idx = self.selected[0]
             record_id = self.tree.item(idx)['values'][0]
             self.controller.show_frame("ReadFrame", record_id)
         except IndexError:
-            # if there is no selected meeting
+            # if there is no selected book
             messagebox.showinfo("Oh No ~", "Please Select a Book you want to Edit!")
+            self.controller.destroy()
+
 
         except:
             messagebox.showinfo("oh No ~", "There's no Book to be Edit, try Calling for one first!")
+            self.controller.destroy()
 
     def select(self, event):
-        """highlight the selection"""
-        self.selected = event.widget.selection()
+            """highlight the selection"""
+            self.selected = event.widget.selection()
 
-    def delete_meeting(self):
-        """deleting selected meeting"""
+    def delete_book(self):
+        """deleting selected book"""
         # delect all selection from the list selected
         if len(self.selected) == 0:
             messagebox.showinfo("Oh No ~", "No Book have been selected for delete")
+            self.controller.destroy()
+
         try:
             # a random error check the try statement
             error_test = self.selected[0]
@@ -141,8 +146,9 @@ class MainFrame(tk.Frame):
                 self.tree.delete(idx)
         except:
             messagebox.showinfo("oh No ~", "Can't see any Book to be delete, try Calling for one first!")
+            self.controller.destroy()
 
-    def update(self):
+def update(self):
         """refresh the treeview"""
         for row in self.tree.get_children():
             self.tree.delete(row)
@@ -173,26 +179,26 @@ class ReadFrame(tk.Frame):
         self.data = {}
         """set up the form, and a submit button """
         # username
-        self.data['UserName'] = EntryField(self, label='UserName')
-        self.data['UserName'].grid(row=1, column=0, pady=2)
+        self.data['bookid'] = EntryField(self, label='bookid')
+        self.data['bookid'].grid(row=1, column=0, pady=2)
         # Date
-        self.data['DATE'] = EntryField(self, label='DATE')
-        self.data['DATE'].grid(row=2, column=0, pady=2)
+        self.data['Title'] = EntryField(self, label='Title')
+        self.data['Title'].grid(row=2, column=0, pady=2)
         # time
         self.data['Time'] = EntryField(self, label='Time')
         self.data['Time'].grid(row=3, column=0, pady=2)
         # place
-        self.data['Meeting Place'] = EntryField(self, label='Meeting Place')
-        self.data['Meeting Place'].grid(row=4, column=0, pady=2)
+        self.data['Average Rating'] = EntryField(self, label='Average Rating')
+        self.data['Average Rating'].grid(row=4, column=0, pady=2)
 
-        self.data['Theme'] = EntryField(self, label='Theme')
-        self.data['Theme'].grid(row=5, column=0, pady=2)
+        self.data['Language'] = EntryField(self, label='Language')
+        self.data['Language'].grid(row=5, column=0, pady=2)
 
-        self.data['Book Selection'] = EntryField(self, label='Book Selection')
-        self.data['Book Selection'].grid(row=6, column=0, pady=2)
+        self.data['Pages'] = EntryField(self, label='Pages')
+        self.data['Pages'].grid(row=6, column=0, pady=2)
 
-        self.data['Email'] = EntryField(self, label='Email')
-        self.data['Email'].grid(row=7, column=0, pady=2)
+        self.data['Publisher'] = EntryField(self, label='Publisher')
+        self.data['Publisher'].grid(row=7, column=0, pady=2)
 
         self.Button1 = tk.Button(self, text='Update',
                                  activeforeground="blue", command=self.submit)
