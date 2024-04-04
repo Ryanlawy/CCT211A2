@@ -4,6 +4,9 @@ import menus
 import main_page
 import database
 
+"""
+The main function that runs the whole APP
+"""
 
 def main():
     root = Tk()
@@ -11,8 +14,6 @@ def main():
     height = root.winfo_screenheight()
     root.title("Drama BookClub")
     root.geometry("%dx%d" % (width, height))  # Size of the login window
-
-
 
     login.Login(root)
     root.mainloop()
@@ -26,14 +27,11 @@ def main():
     # Initialize the main application interface
     main_page.MainPage(main_root)
 
-    # Initialize menus for the main application, if needed
+    # Initialize menus for the main application
     menus.makemenu(main_root)
     main_root.mainloop()
 
 if __name__ == '__main__':
     main()
-
-### MVC
-### python object model
 
 

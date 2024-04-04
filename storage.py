@@ -5,6 +5,8 @@ import meeting
 
 
 class Storage:
+    """The class for storge of meeting"""
+    # creating the db file
     FILENAME = "callfor.db"
 
     def __init__(self):
@@ -86,6 +88,7 @@ class Meeting:
 
 
 class BookStorage:
+    """ the storage for the """
     FILENAME = "booklist.db"
 
     def __init__(self):

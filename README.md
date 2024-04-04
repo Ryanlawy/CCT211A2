@@ -19,3 +19,10 @@ into a list, by clicking it after selecting a book from the booklist. Finally,
 
 
 
+Reference:
+
+CCT211 gui-persistent-demo-app -> sampling forms for meeting
+CCT211 W11 demo code -> the use of db
+https://github.com/HansiKR/Python-tkinter-Project/tree/master -> setting the login page
+
+

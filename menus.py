@@ -26,7 +26,7 @@ def makemenu(win):
 
     # Navigate menus
     nevmenu = Menu(top_menu, tearoff=0)
-    nevmenu.add_command(label="Back", command=to_login)
+    nevmenu.add_command(label="Back", command=lambda: to_login(win))
     top_menu.add_cascade(label="Navigate", menu=nevmenu)
 
     helpmenu = Menu(top_menu, tearoff=0)
@@ -43,9 +43,22 @@ def to_login(win):
     main.main()
 
 
-def show_text(win):
-    win.destroy()  # This destroys the current window
-    credit.Credit()
+def show_text():
+    info_window = tk.Toplevel()
+    info_window.title("Reference")
+    # Set the background color of the window
+    info_window.configure(bg='#25330F')  # Light gray background
 
+    # Adjust the Label widgets to have the same background color
+    tk.Label(info_window, text="Reference:", font=('Times New Roman', 40, 'bold')).pack(pady=10)
+    info_text = """CCT211 Week11 code, 
+    
+    GitHub: https://github.com/HansiKR/Python-tkinter-Project/tree/master"""
+    tk.Label(info_window, text=info_text, justify='left').pack(padx=10, pady=10)
+    tk.Label(info_window, text="Reference:", font=('Times New Roman', 40, 'bold')).pack(pady=100)
+    info_text = """Sean Kao, 
+    
+    Lai Wei Yu"""
+    tk.Label(info_window, text=info_text, justify='left').pack(padx=10, pady=100)
 
 
