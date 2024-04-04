@@ -108,7 +108,6 @@ class MainPage:
         # # Display the book list automatically
         self.set_bookframe()
 
-
     # helper
     def set_book_complex(self):
         try:
@@ -117,7 +116,6 @@ class MainPage:
             self.set_bookframe()
         except:
             self.set_bookframe()
-
 
     # populate the list of
     def set_bookframe(self):
@@ -162,6 +160,7 @@ class MainPage:
     def set_userframe(self):
 
         self.TableMargin.destroy()
+        self.search_results_frame.destroy()
         self.TableMargin = Frame(self.root, bg="#25330F")
         self.TableMargin.pack(side=BOTTOM)
         self.scrollbarx = Scrollbar(self.TableMargin, orient=HORIZONTAL)
@@ -217,10 +216,8 @@ class MainPage:
                 if query in row['title'].lower():
                     search_results.append(row)
                 # Add more conditions as needed
-
         # Update the TreeView with the search results
         self.update_booklist(search_results)
-
 
     def update_booklist(self, search_results):
         # First, clear any existing search results frame if it exists
@@ -256,6 +253,7 @@ class MainPage:
         self.tree.column('#0', stretch=NO, minwidth=0, width=0)
         self.tree.column('#1', stretch=NO, minwidth=0, width=200)
         self.tree.column('#2', stretch=NO, minwidth=0, width=200)
+        self.tree.bind('<<TreeviewSelect>>', self.select)
 
 
         self.tree.pack(fill=BOTH, expand=True)
@@ -283,11 +281,16 @@ class MainPage:
 
     def add_book_to_list(self):
         """the fnnction to add new book to the list"""
+        print(self.selected)
         self.add_book_list.append(self.tree.item(self.selected[0])['values'])
+
+
+
 
     def set_my_list(self):
         """set the frame for the personal book list"""
         self.TableMargin.destroy()
+        self.search_results_frame.destroy()
         self.search_results_frame = Frame(self.root, bg="#25330F")
         self.search_results_frame.pack(fill=BOTH, expand=True)
 
@@ -320,10 +323,3 @@ class MainPage:
                 result[0], result[1], result[2],
                 result[3], result[4],
                 result[5], result[6]))
-
-        # Update the search result label
-        self.search_result_label.config(text=f"Number of search results: {len(self.add_book_list)}")
-
-        # handle the case where no results are found
-        if not self.add_book_list:
-            self.search_result_label.config(text="No results found.")
