@@ -158,9 +158,7 @@ class MainPage:
 
     # populate the list of users
     def set_userframe(self):
-
         self.TableMargin.destroy()
-        self.search_results_frame.destroy()
         self.TableMargin = Frame(self.root, bg="#25330F")
         self.TableMargin.pack(side=BOTTOM)
         self.scrollbarx = Scrollbar(self.TableMargin, orient=HORIZONTAL)
@@ -283,9 +281,6 @@ class MainPage:
         """the fnnction to add new book to the list"""
         print(self.selected)
         self.add_book_list.append(self.tree.item(self.selected[0])['values'])
-
-
-
 
     def set_my_list(self):
         """set the frame for the personal book list"""
