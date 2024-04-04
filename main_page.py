@@ -6,6 +6,8 @@ from tkinter import messagebox
 import database
 import meeting
 import book_list
+import storage
+import tkinter as tk
 
 class MainPage:
     def __init__(self, root):
@@ -18,7 +20,12 @@ class MainPage:
 
         # UI setup
         self.setup_ui()
-        # book frame set up
+        # book list set up
+        self.my_list = {}
+        # selection
+        self.selected = []
+        self.add_book_list = []
+
 
     def basic_info(self):
         # Your basic info implementation
@@ -64,36 +71,39 @@ class MainPage:
 
         # Search Button
         self.search_button = Button(self.search_frame, text="Search", command=self.perform_search, fg="black", bg="#25330F", width=10, font=("Impact", 15))
-        self.search_button.grid(row=1, column=2, padx=5, sticky=W)
+        self.search_button.grid(row=1, column=2, padx=5)
 
         #  show book Button
         self.showbook_button = Button(self.search_frame, text="All Books",
                                       fg="black", bg="#25330F", width=10,
                                       font=("Impact", 15), command=self.set_book_complex)
-        self.showbook_button.grid(row=1, column=3, padx=5, sticky=W)
+        self.showbook_button.grid(row=1, column=3, padx=10)
         # show user button
-
         self.showuser_button = Button(self.search_frame, text="All Users",
                                       fg="black", bg="#25330F", width=10,
                                       font=("Impact", 15), command=self.set_userframe)
-        self.showuser_button.grid(row=1, column=4, padx=5, sticky=W)
-        # self.search_type_combobox = ttk.Combobox(self.search_frame, textvariable=self.search_type_var, state="readonly", width=15, style='Custom.TCombobox')
-        # self.search_type_combobox['values'] = ('Book', 'User')
-        # self.search_type_combobox.current(0)
-        # self.search_type_combobox.grid(row=1, column=3, padx=1, sticky=W)
-        # self.search_type_combobox.bind("<<ComboboxSelected>>", self.selection_changed(self.search_type_combobox))
+        self.showuser_button.grid(row=1, column=4, padx=10)
 
-
-        #call for meeting
+        # call for meeting
         self.meeting_button = Button(text="Meeting", command=meeting.FloatScreen, fg="black", bg="#25330F", width=10, font=("Impact", 15))
-        #self.meeting_button.grid(row=2, column=2, padx=5, sticky=W)
-        self.meeting_button.pack(side="top", padx=10, pady=10)
+        # self.meeting_button.grid(row=2, column=2, padx=5, sticky=W)
+        self.meeting_button.pack()
 
-        #my list
-        self.list_button = Button(text="My Lists", command=book_list.ListScreen, fg="black", bg="#25330F", width=10, font=("Impact", 15))
-        #self.list_button.grid(row=2, column=4, padx=5, sticky=W)
-        self.list_button.pack(side="top", padx=20, pady=10)
+        # my list
+        self.list_button = Button(text="My Lists", command=self.set_my_list, fg="black", bg="#25330F", width=10, font=("Impact", 15))
+        # self.list_button.grid(row=2, column=4, padx=5, sticky=W)
+        self.list_button.pack()
+        #command=book_list.ListScreen
 
+        # add to book list
+        self.add_list = Button(text="Add to my list", command=self.add_book_to_list, fg="black", bg="#25330F", width=10, font=("Impact", 15))
+        #self.add_list.grid(row=2, column=4, padx=5, sticky=W)
+        self.add_list.pack()
+
+        self.create_new_book = Button(self.search_frame, text="create new book",
+                                      fg="black", bg="#25330F", width=10,
+                                      font=("Impact", 15), command=book_list.ListScreen)
+        self.create_new_book.grid(row=1, column=5, padx=10)
 
         # # Display the book list automatically
         self.set_bookframe()
@@ -107,7 +117,6 @@ class MainPage:
             self.set_bookframe()
         except:
             self.set_bookframe()
-
 
 
     # populate the list of
@@ -132,6 +141,7 @@ class MainPage:
         self.tree.column('#0', stretch=NO, minwidth=0, width=0)
         self.tree.column('#1', stretch=NO, minwidth=0, width=200)
         self.tree.column('#2', stretch=NO, minwidth=0, width=200)
+        self.tree.bind('<<TreeviewSelect>>', self.select)
         self.tree.pack()
 
         # populate the treeview from a csv
@@ -267,6 +277,53 @@ class MainPage:
         if not search_results:
             self.search_result_label.config(text="No results found.")
 
+    def select(self, event):
+        """check for selection"""
+        self.selected = event.widget.selection()
+
+    def add_book_to_list(self):
+        """the fnnction to add new book to the list"""
+        self.add_book_list.append(self.tree.item(self.selected[0])['values'])
+
+    def set_my_list(self):
+        """set the frame for the personal book list"""
+        self.TableMargin.destroy()
+        self.search_results_frame = Frame(self.root, bg="#25330F")
+        self.search_results_frame.pack(fill=BOTH, expand=True)
+
+        # Add scrollbars and Treeview to the search results frame
+        scrollbarx = Scrollbar(self.search_results_frame, orient=HORIZONTAL)
+        scrollbary = Scrollbar(self.search_results_frame, orient=VERTICAL)
+        self.tree = ttk.Treeview(self.search_results_frame, columns=("bookid", "title", "rating", "language_code", "num_pages", "publication_date", "publisher"), height=400, selectmode="extended", yscrollcommand=scrollbary.set, xscrollcommand=scrollbarx.set)
+
+        scrollbary.config(command=self.tree.yview)
+        scrollbary.pack(side=RIGHT, fill=Y)
+        scrollbarx.config(command=self.tree.xview)
+        scrollbarx.pack(side=BOTTOM, fill=X)
+
+        # Define the tree headings and columns
+        self.tree.heading('bookid', text="BookID", anchor=W)
+        self.tree.heading('title', text="Title", anchor=W)
+        # Add the rest of your headings here...
+
+        self.tree.column('#0', stretch=NO, minwidth=0, width=0)
 
 
+        self.tree.pack(fill=BOTH, expand=True)
 
+        # Clear existing entries in the TreeView
+        self.tree.delete(*self.tree.get_children())
+
+        # Insert new search results into the TreeView
+        for result in self.add_book_list:
+            self.tree.insert("", "end", values=(
+                result[0], result[1], result[2],
+                result[3], result[4],
+                result[5], result[6]))
+
+        # Update the search result label
+        self.search_result_label.config(text=f"Number of search results: {len(self.add_book_list)}")
+
+        # handle the case where no results are found
+        if not self.add_book_list:
+            self.search_result_label.config(text="No results found.")

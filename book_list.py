@@ -3,7 +3,7 @@ from tkinter import font as tkfont
 import tkinter.ttk as ttk
 import storage
 from tkinter import messagebox
-
+import main_page
 
 """
 This part is used to create the meeting sign-up 
@@ -16,7 +16,6 @@ checking if a meeting is selected when editing and deleting,
 pushing warning messages if there are no meeting in the data when deleting and editing
  
 """
-
 
 class ListScreen(tk.Tk):
 
@@ -140,6 +139,7 @@ class MainFrame(tk.Frame):
         if len(self.selected) == 0:
             messagebox.showinfo("Oh No ~", "No Meeting have been selected for delete")
         try:
+            # a random error check the try statement
             error_test = self.selected[0]
             for idx in self.selected:
                 record_id = self.tree.item(idx)['values'][0]
@@ -240,72 +240,73 @@ class ReadFrame(tk.Frame):
         self.persist.save(self.list)
         self.controller.show_frame("MainFrame")
 
-# class AddFrame(tk.Frame):
-#     ''' provides a form for creating a new meeting
-#     '''
-#
-#     def __init__(self, parent, controller, persist=None):
-#         tk.Frame.__init__(self, parent)
-#         self.controller = controller
-#         label = tk.Label(self, text="Create New Meeting",
-#                          font=controller.title_font)
-#         label.grid(row=0, column=0)
-#         # this object is the data persistence model
-#         self.persist = persist
-#         # this empty dict will hold each of the data entry fields
-#         self.data = {}
-#
-#         self.data['UserName'] = EntryField(self, label='UserName')
-#         self.data['UserName'].grid(row=1, column=0, pady=2)
-#
-#         self.data['DATE'] = EntryField(self, label='DATE')
-#         self.data['DATE'].grid(row=2, column=0, pady=2)
-#
-#         self.data['Time'] = EntryField(self, label='Time')
-#         self.data['Time'].grid(row=3, column=0, pady=2)
-#
-#         self.data['Meeting Place'] = EntryField(self, label='Meeting Place')
-#         self.data['Meeting Place'].grid(row=4, column=0, pady=2)
-#
-#         self.data['Theme'] = EntryField(self, label='Theme')
-#         self.data['Theme'].grid(row=5, column=0, pady=2)
-#
-#         self.data['Book Selection'] = EntryField(self, label='Book Selection')
-#         self.data['Book Selection'].grid(row=6, column=0, pady=2)
-#
-#         self.data['Email'] = EntryField(self, label='Email')
-#         self.data['Email'].grid(row=7, column=0, pady=2)
-#
-#         self.Button1 = tk.Button(self, text='Submit', activebackground="green",
-#                                  activeforeground="blue", command=self.submit)
-#         self.Button1.grid(row=8, column=0, pady=10)
-#
-#         button = tk.Button(self, text="Return to the browse page",
-#                            command=lambda: controller.show_frame("MainFrame"))
-#         button.grid(row=9, column=0)
-#
-#     def reset(self):
-#         """reset the frame"""
-#         for key in self.data:
-#             self.data[key].reset()
-#
-#     def update(self):
-#         self.reset()
-#
-#     def submit(self):
-#         """create a new meeting base on the form"""
-#         c = storage.Meeting(username=self.data['UserName'].get(),
-#                             date=self.data['DATE'].get(),
-#                             time=self.data['Time'].get(),
-#                             place=self.data['Meeting Place'].get(),
-#                             theme=self.data['Theme'].get(),
-#                             book_selection=self.data['Book Selection'].get(),
-#                             email=self.data['Email'].get()
-#                             )
-#
-#         self.persist.save(c)
-#         self.update()
-#         self.controller.show_frame("MainFrame")
+
+class AddBook(tk.Frame):
+    ''' provides a form for creating a new meeting
+    '''
+
+    def __init__(self, parent, controller, persist=None):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        label = tk.Label(self, text="Create New Meeting",
+                         font=controller.title_font)
+        label.grid(row=0, column=0)
+        # this object is the data persistence model
+        self.persist = persist
+        # this empty dict will hold each of the data entry fields
+        self.data = {}
+
+        self.data['bookid'] = EntryField(self, label='bookid')
+        self.data['bookid'].grid(row=1, column=0, pady=2)
+
+        self.data['title'] = EntryField(self, label='title')
+        self.data['title'].grid(row=2, column=0, pady=2)
+
+        self.data['rating'] = EntryField(self, label='Rating')
+        self.data['rating'].grid(row=3, column=0, pady=2)
+
+        self.data['language_code'] = EntryField(self, label='Meeting Place')
+        self.data['language_code'].grid(row=4, column=0, pady=2)
+
+        self.data['num_pages'] = EntryField(self, label='Theme')
+        self.data['num_pages'].grid(row=5, column=0, pady=2)
+
+        self.data['publication_date'] = EntryField(self, label='Book Selection')
+        self.data['publication_date'].grid(row=6, column=0, pady=2)
+
+        self.data['publisher'] = EntryField(self, label='Email')
+        self.data['publisher'].grid(row=7, column=0, pady=2)
+
+        self.Button1 = tk.Button(self, text='Submit', activebackground="green",
+                                 activeforeground="blue", command=self.submit)
+        self.Button1.grid(row=8, column=0, pady=10)
+
+        button = tk.Button(self, text="Return to the browse page",
+                           command=lambda: controller.show_frame("MainFrame"))
+        button.grid(row=9, column=0)
+
+    def reset(self):
+        """reset the frame"""
+        for key in self.data:
+            self.data[key].reset()
+
+    def update(self):
+        self.reset()
+
+    def submit(self):
+        """create a new meeting base on the form"""
+        c = storage.MyList(bookid=main_page.MainPage.bo,
+                               title=self.data['bookid'].get(),
+                      rating=self.data['bookid'].get(),
+                      language_code=self.data['bookid'].get(),
+                      num_pages=self.data['bookid'].get(),
+                      publication_date=self.data['bookid'].get(),
+                      publisher=self.data['bookid'].get()
+                       )
+
+        self.persist.save(c)
+        self.update()
+        self.controller.show_frame("MainFrame")
 
 
 class EntryField(tk.Frame):

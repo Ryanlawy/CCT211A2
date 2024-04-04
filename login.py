@@ -28,7 +28,7 @@ class Login:
     def loginControlFrame(self):
         # Login Frame
         self.loginFrame = Frame(self.root, bg="white")
-        self.loginFrame.pack(side=LEFT, fill=X, padx=60, pady=40)
+        self.loginFrame.pack(side=LEFT, fill=X, padx=60)
 
         # Header above login Box
         self.login_frame_title = Label(self.loginFrame, text="Welcome! Book Lovers!", font=("Impact", 35), bg="white", fg="#25330F")
@@ -57,8 +57,8 @@ class Login:
         self.rightFrame.pack(side=RIGHT)
 
         self.labelCompanyName = Label(self.rightFrame, text="Drama BookClub", font=("Goudy Old Style", 55), bg="#25330F", fg="white")
-        self.labelCompanyName.pack(pady=0)
+        self.labelCompanyName.grid(row=0, column=2, columnspan=2, padx=10)
 
         self.labelDesc = Label(self.rightFrame, text="Find Books of all things Beautiful and Lofty!", font=("Times New Roman", 25, "italic"), bg="#25330F", fg="white")
-        self.labelDesc.pack(padx=60, pady=0)
+        self.labelDesc.grid(row=1, column=2, columnspan=2, padx=10, pady=6)
 
