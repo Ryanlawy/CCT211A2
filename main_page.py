@@ -5,6 +5,7 @@ import login
 from tkinter import messagebox
 import database
 import meeting
+import book_list
 
 class MainPage:
     def __init__(self, root):
@@ -89,7 +90,7 @@ class MainPage:
         self.meeting_button.pack(side="top", padx=10, pady=10)
 
         #my list
-        self.list_button = Button(text="My Lists", command=meeting.FloatScreen, fg="black", bg="#25330F", width=10, font=("Impact", 15))
+        self.list_button = Button(text="My Lists", command=book_list.ListScreen, fg="black", bg="#25330F", width=10, font=("Impact", 15))
         #self.list_button.grid(row=2, column=4, padx=5, sticky=W)
         self.list_button.pack(side="top", padx=20, pady=10)
 
