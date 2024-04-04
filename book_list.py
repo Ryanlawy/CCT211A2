@@ -61,7 +61,7 @@ class MainFrame(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
 
-        label = tk.Label(self, text="Meetings",
+        label = tk.Label(self, text="Book list",
                          font=controller.title_font)
         label.grid(column=0, pady=10)
 
@@ -105,17 +105,17 @@ class MainFrame(tk.Frame):
                 record.language_code, record.num_pages, record.publication_date,
                 record.publisher))
 
-        edit_button = tk.Button(self, text="Edit Exiting Meeting",
+        edit_button = tk.Button(self, text="Edit Book",
                                 command=self.edit_meeting)
         edit_button.grid(column=0)
 
-        delete_button = tk.Button(self, text="Delete Meeting",
+        delete_button = tk.Button(self, text="Delete book",
                                   command=self.delete_meeting)
         delete_button.grid(column=0)
 
-        new_button = tk.Button(self, text="Call For New Meeting",
-                               command=lambda: controller.show_frame("AddFrame"))
-        new_button.grid(column=0)
+        # new_button = tk.Button(self, text="Call For New Meeting",
+        #                        command=lambda: controller.show_frame("AddFrame"))
+        # new_button.grid(column=0)
 
     def edit_meeting(self):
         # if there is no meeting to edit
@@ -125,10 +125,10 @@ class MainFrame(tk.Frame):
             self.controller.show_frame("ReadFrame", record_id)
         except IndexError:
             # if there is no selected meeting
-            messagebox.showinfo("Oh No ~", "Please Select a Meeting you want to Edit!")
+            messagebox.showinfo("Oh No ~", "Please Select a Book you want to Edit!")
 
         except:
-            messagebox.showinfo("oh No ~", "There's no Meeting to be Edit, try Calling for one first!")
+            messagebox.showinfo("oh No ~", "There's no Book to be Edit, try Calling for one first!")
 
     def select(self, event):
         """highlight the selection"""
@@ -330,7 +330,6 @@ class EntryField(tk.Frame):
 
     def get(self):
         return self.dataentry.get()
-
 
 
 if __name__ == "__main__":
