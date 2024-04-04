@@ -141,12 +141,11 @@ class MainPage:
                 bookid = row['bookID']
                 title = row['title']
                 rating = row['average_rating']
-                isbn = row['isbn']
                 language = row['language_code']
                 page = row['  num_pages']
                 date = row['publication_date']
                 publisher = row['publisher']
-                self.tree.insert("", 0, values=(bookid, title, rating, isbn, language, page, date, publisher))
+                self.tree.insert("", 0, values=(bookid, title, rating, language, page, date, publisher))
         self.tree.pack(fill=X)
 
     # populate the list of users
@@ -197,7 +196,6 @@ class MainPage:
 
     def perform_search(self):
         query = self.search_var.get().lower()  # Convert query to lowercase for case-insensitive search
-        search_type = self.search_type_var.get()  # Determine the search type
 
         # Initialize an empty list for search results
         search_results = []
@@ -237,9 +235,17 @@ class MainPage:
         # Define the tree headings and columns
         self.tree.heading('bookid', text="BookID", anchor=W)
         self.tree.heading('title', text="Title", anchor=W)
-        # Add the rest of your headings here...
+        self.tree.heading('bookid', text="BookID", anchor=W)
+        self.tree.heading('title', text="Title", anchor=W)
+        self.tree.heading('rating', text="Average Rating", anchor=W)
+        self.tree.heading('language_code', text="Language", anchor=W)
+        self.tree.heading('num_pages', text="Pages", anchor=W)
+        self.tree.heading('publication_date', text="Publication Date", anchor=W)
+        self.tree.heading('publisher', text="Publisher", anchor=W)
 
         self.tree.column('#0', stretch=NO, minwidth=0, width=0)
+        self.tree.column('#1', stretch=NO, minwidth=0, width=200)
+        self.tree.column('#2', stretch=NO, minwidth=0, width=200)
 
 
         self.tree.pack(fill=BOTH, expand=True)
