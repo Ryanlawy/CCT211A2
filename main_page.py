@@ -1,11 +1,13 @@
 from tkinter import *
+import tkinter as tk
 from tkinter import ttk
 import csv
 import login
 from tkinter import messagebox
 import database
 
-class MainPage:
+
+class MainPage():
     def __init__(self, root):
         self.root = root
         self.root.config(bg="#25330F")
@@ -17,7 +19,7 @@ class MainPage:
         # UI setup
         self.setup_ui()
         # book frame set up
-        self.set_bookframe()
+        #self.set_bookframe()
         #self.set_userframe()
 
     def basic_info(self):
@@ -32,6 +34,7 @@ class MainPage:
         # Implement search logic here
 
     def setup_ui(self):
+
         # Basic Info
         self.basic_info()
 
@@ -71,12 +74,22 @@ class MainPage:
         self.search_button = Button(self.search_frame, text="Search", fg="black", bg="#25330F", width=10, font=("Impact", 15))
         self.search_button.grid(row=1, column=2, padx=10, sticky=W)
 
-        #  Button
-        self.search_type_combobox = ttk.Combobox(self.search_frame, textvariable=self.search_type_var, state="readonly", width=15, style='Custom.TCombobox')
-        self.search_type_combobox['values'] = ('Book', 'User')
-        self.search_type_combobox.current(0)
-        self.search_type_combobox.grid(row=1, column=3, padx=1, sticky=W)
-        self.search_type_combobox.bind("<<ComboboxSelected>>", self.selection_changed(self.search_type_combobox))
+        #  show book Button
+        self.showbook_button = Button(self.search_frame, text="All Books",
+                                      fg="black", bg="#25330F", width=10,
+                                      font=("Impact", 15), command=self.set_bookframe)
+        self.showbook_button.grid(row=1, column=3, padx=10, sticky=W)
+        # show user button
+
+        self.showuser_button = Button(self.search_frame, text="All Users",
+                                      fg="black", bg="#25330F", width=10,
+                                      font=("Impact", 15), command=self.set_userframe)
+        self.showuser_button.grid(row=1, column=4, padx=10, sticky=W)
+        # self.search_type_combobox = ttk.Combobox(self.search_frame, textvariable=self.search_type_var, state="readonly", width=15, style='Custom.TCombobox')
+        # self.search_type_combobox['values'] = ('Book', 'User')
+        # self.search_type_combobox.current(0)
+        # self.search_type_combobox.grid(row=1, column=3, padx=1, sticky=W)
+        # self.search_type_combobox.bind("<<ComboboxSelected>>", self.selection_changed(self.search_type_combobox))
 
 
         # Search Instruction Label
@@ -87,15 +100,10 @@ class MainPage:
         #self.set_userframe()
         #self.set_bookframe()
 
-    def selection_changed(self, box):
-        if box.get() == "Book":
-            self.set_userframe()
-        else:
-            self.set_bookframe()
-
-
-    # populate the list of books
     def set_bookframe(self):
+        # TableMargin2.destroy()
+        # global TableMargin
+        self.setup_ui()
         self.TableMargin = Frame(self.root, bg="#25330F")
         self.TableMargin.pack(side=BOTTOM)
         self.scrollbarx = Scrollbar(self.TableMargin, orient=HORIZONTAL)
@@ -133,14 +141,16 @@ class MainPage:
                 self.tree.insert("", 0, values=(bookid, title, rating, isbn, language, page, date, publisher))
         self.tree.pack(fill=X)
 
-
     # populate the list of users
     def set_userframe(self):
-        self.TableMargin = Frame(self.root, bg="#25330F")
-        self.TableMargin.pack(side=BOTTOM)
-        self.scrollbarx = Scrollbar(self.TableMargin, orient=HORIZONTAL)
-        self.scrollbary = Scrollbar(self.TableMargin, orient=VERTICAL)
-        self.tree = ttk.Treeview(self.TableMargin, columns=("userid", "name", "gender", "time", "quote", "author", "tags", "likes"), height=400, selectmode="extended", yscrollcommand=self.scrollbary.set, xscrollcommand=self.scrollbarx.set)
+        # TableMargin.destroy()
+        # global TableMargin2
+
+        self.TableMargin2 = Frame(self.root, bg="#25330F")
+        self.TableMargin2.pack(side=BOTTOM)
+        self.scrollbarx = Scrollbar(self.TableMargin2, orient=HORIZONTAL)
+        self.scrollbary = Scrollbar(self.TableMargin2, orient=VERTICAL)
+        self.tree = ttk.Treeview(self.TableMargin2, columns=("userid", "name", "gender", "time", "quote", "author", "tags", "likes"), height=400, selectmode="extended", yscrollcommand=self.scrollbary.set, xscrollcommand=self.scrollbarx.set)
         self.scrollbary.config(command=self.tree.yview)
         self.scrollbary.pack(side=RIGHT, fill=Y)
         self.scrollbarx.config(command=self.tree.xview)
@@ -168,8 +178,8 @@ class MainPage:
                 time = row['Count']
                 self.tree.insert("", 0, values=(name, gender, time))
 
-        with open("quotes.csv", encoding='utf-8') as f:
-            reader = csv.DictReader(f, delimiter=',')
+        with open("quotes.csv", encoding='utf-8') as t:
+            reader = csv.DictReader(t, delimiter=',')
             for row in reader:
                 userid = row['index']
                 quote = row['quote']
@@ -180,5 +190,6 @@ class MainPage:
 
         self.tree.pack(fill=X)
 
-#    def set_book_listdb():
+
+
 
