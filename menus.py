@@ -5,9 +5,10 @@ from login import Login
 import main_page
 import main
 
-
+"""this part is to make menu bar for main application navigation"""
 def makemenu(win):
-    top_menu = tk.Menu(win)  # win=top-level window
+    # win=top-level window
+    top_menu = tk.Menu(win) 
     menu = Menu(top_menu, name='name')
     menu.add_command(label="Crew and Credit", command=show_text)
     top_menu.add_cascade(label="Drama BookClub", menu=menu)
@@ -36,7 +37,8 @@ def makemenu(win):
 
 
 def to_login(win):
-    win.destroy()  # This destroys the current window
+     # This destroys the current window
+    win.destroy() 
     main.main()
 
 

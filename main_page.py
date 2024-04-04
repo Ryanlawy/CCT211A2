@@ -8,7 +8,11 @@ import meeting
 import book_list
 import storage
 import tkinter as tk
-
+"""
+This part is the main page after login successful, it is the main landing page
+it allow users to use different functions includes search, books and users, create meeting shecdule
+adding books to their book list and manage book inventory system
+"""
 class MainPage:
     def __init__(self, root):
         self.root = root

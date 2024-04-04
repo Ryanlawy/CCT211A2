@@ -1,5 +1,5 @@
 import sqlite3
-
+"""this is the database files that manage and control the csv. data"""
 def connect_database():
     global conn1, cur1, conn2, cur2
 

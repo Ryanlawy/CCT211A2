@@ -3,7 +3,7 @@ import sqlite3
 import tkinter as tk
 import meeting
 
-
+"""This part is to manage the meeting storage data """
 class Storage:
     """The class for storge of meeting"""
     # creating the db file

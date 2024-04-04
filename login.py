@@ -1,7 +1,10 @@
 from tkinter import *
 from tkinter import messagebox
 
-
+"""
+Here is login page that when execute the program will need to login
+the defalut username and passwords are both '1234568'
+"""
 class Login:
     def __init__(self, root):  # Accept a callback function
         self.root = root
