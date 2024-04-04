@@ -87,18 +87,18 @@ class MainPage:
         # call for meeting
         self.meeting_button = Button(text="Meeting", command=meeting.FloatScreen, fg="black", bg="#25330F", width=10, font=("Impact", 15))
         # self.meeting_button.grid(row=2, column=2, padx=5, sticky=W)
-        self.meeting_button.pack()
+        self.meeting_button.pack(fill=X)
 
         # my list
         self.list_button = Button(text="My Lists", command=self.set_my_list, fg="black", bg="#25330F", width=10, font=("Impact", 15))
         # self.list_button.grid(row=2, column=4, padx=5, sticky=W)
-        self.list_button.pack()
+        self.list_button.pack(fill=X)
         #command=book_list.ListScreen
 
         # add to book list
         self.add_list = Button(text="Add to my list", command=self.add_book_to_list, fg="black", bg="#25330F", width=10, font=("Impact", 15))
         #self.add_list.grid(row=2, column=4, padx=5, sticky=W)
-        self.add_list.pack()
+        self.add_list.pack(fill=X)
 
         self.create_new_book = Button(self.search_frame, text="Request new book",
                                       fg="black", bg="#25330F", width=15,
@@ -279,6 +279,7 @@ class MainPage:
     def set_my_list(self):
         """set the frame for the personal book list"""
         self.TableMargin.destroy()
+        self.search_results_frame.destroy()
         self.search_results_frame = Frame(self.root, bg="#25330F")
         self.search_results_frame.pack(fill=BOTH, expand=True)
 
