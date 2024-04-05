@@ -17,7 +17,7 @@ class ListScreen(tk.Tk):
         self.title_font = tkfont.Font(
             family='Times', size=12, weight="bold", slant="italic")
 
-        # frame stacks
+        # create stack form booklist frame
         stack = tk.Frame(self)
         stack.pack(side="top", fill="both", expand=True)
         stack.grid_rowconfigure(0, weight=1)
